@@ -2,6 +2,7 @@
 import java.awt.Graphics;
 import java.awt.Image;
 import java.io.IOException;
+import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
@@ -21,7 +22,7 @@ import javax.swing.JButton;
  */
 public class VentanaAhorcado extends javax.swing.JFrame {
 
-    String palabraOculta = "WILLY";
+    String palabraOculta = "";
     
     //contador para saber el numero de fallos
     int numeroFallos = 0;
@@ -40,8 +41,36 @@ public class VentanaAhorcado extends javax.swing.JFrame {
         initComponents();
         //aqui va el codigo que poniamos en el run en ACM
         cambiaImagenAhorcado();
+        eligePalabraOculta();
+        pintaGuionesEnLabel();
     }
 
+    
+    private void eligePalabraOculta() {
+        String [] listaDePalabras = new String[10];
+        Random r = new Random();
+        
+        listaDePalabras[0] = "WILLY";
+        listaDePalabras[1] = "MITOLOGIA";
+        listaDePalabras[2] = "SOWFTWARE";
+        listaDePalabras[3] = "PROGRAMACION";
+        listaDePalabras[4] = "ESTERNON";
+        listaDePalabras[5] = "DESAFIANTE";
+        listaDePalabras[6] = "HIPOPOTOMONSTROSISQUIPEDALIOFOBIA";
+        listaDePalabras[7] = "CONSECOTALEFOBIA";
+        listaDePalabras[8] = "ANATIDAEFOBIA";
+        listaDePalabras[9] = "ELECTROENCEFALOGRAFISTA";
+        palabraOculta = listaDePalabras[r.nextInt(9)];
+        System.out.println(palabraOculta);
+    }
+     
+    private void pintaGuionesEnLabel() {
+        jLabel1.setText("");
+        for (int i=0; i<palabraOculta.length(); i++) {
+            jLabel1.setText(jLabel1.getText() + "_ ");
+        }
+    }
+    
     private void cambiaImagenAhorcado() {
         
         String nombreImagen = "";
@@ -139,7 +168,7 @@ public class VentanaAhorcado extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel1.setFont(new java.awt.Font("Times New Roman", 0, 36)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Times New Roman", 0, 21)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("_ _ _ _ _ ");
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 11, 354, 64));
