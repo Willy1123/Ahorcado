@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
 /*
@@ -37,36 +39,34 @@ public class VentanaAhorcado extends javax.swing.JFrame {
     public VentanaAhorcado() {
         initComponents();
         //aqui va el codigo que poniamos en el run en ACM
+        cambiaImagenAhorcado();
     }
 
-    @Override
-    public void paint(Graphics g) {
-        super.paint(g);
-        //con esto indicamos que vamos a dibujar en el panel
-        g = jPanel1.getGraphics();
-        Image miImagen = null;
-        try {
-            //cargamos una imagen
-            switch (numeroFallos) {
-                case 0: miImagen = ImageIO.read(getClass() .getResource("/ahorcado_0.png")); break;
-                case 1: miImagen = ImageIO.read(getClass() .getResource("/ahorcado_1.png")); break;
-                case 2: miImagen = ImageIO.read(getClass() .getResource("/ahorcado_2.png")); break;
-                case 3: miImagen = ImageIO.read(getClass() .getResource("/ahorcado_3.png")); break;
-                case 4: miImagen = ImageIO.read(getClass() .getResource("/ahorcado_4.png")); break;
-                case 5: miImagen = ImageIO.read(getClass() .getResource("/ahorcado_5.png")); break;
-                case -1: miImagen = ImageIO.read(getClass() .getResource("/acertasteTodo.png")); break;
-                default : miImagen = ImageIO.read(getClass() .getResource("/ahorcado_fin.png")); break;
-                
+    private void cambiaImagenAhorcado() {
+        
+        String nombreImagen = "";
+        
+        switch (numeroFallos) {
+                case 0: nombreImagen = "/ahorcado_0.png"; break;
+                case 1: nombreImagen = "/ahorcado_1.png"; break;
+                case 2: nombreImagen = "/ahorcado_2.png"; break;
+                case 3: nombreImagen = "/ahorcado_3.png"; break;
+                case 4: nombreImagen = "/ahorcado_4.png"; break;
+                case 5: nombreImagen = "/ahorcado_5.png"; break;
+                case -1: nombreImagen = "/acertasteTodo.png"; break;
+                default : nombreImagen = "/ahorcado_fin.png"; break;
             }
-            
-        } catch (IOException ex) {
-            Logger.getLogger(VentanaAhorcado.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        //dibujo la imagen en el jPanel
-        g.drawImage(miImagen, 0, 0, jPanel1.getWidth(), jPanel1.getHeight(), null);
+        //después del switch, tendremos en nombreImagen el nombre correcto
+        //de la imagen que tenemos que mostrar dependiendo del numero de fallos
+        ImageIcon imagen;
+        imagen = new ImageIcon(getClass().getResource(nombreImagen));
+        Icon icono = new ImageIcon(imagen.getImage().getScaledInstance(jLabel2.getWidth(),
+                jLabel2.getHeight(), Image.SCALE_DEFAULT));
+        jLabel2.setIcon(icono);
+        
     }
     
-    
+
     private void chequeaLetra (JButton boton) {
         if (boton.isEnabled()) {
         String letra = boton.getText();
@@ -94,7 +94,7 @@ public class VentanaAhorcado extends javax.swing.JFrame {
             numeroFallos++;
         }
         }
-        repaint();
+        cambiaImagenAhorcado();
     }
     
     /**
@@ -107,7 +107,7 @@ public class VentanaAhorcado extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        jPanel1 = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
         botonA = new javax.swing.JButton();
         botonB = new javax.swing.JButton();
         botonC = new javax.swing.JButton();
@@ -144,20 +144,8 @@ public class VentanaAhorcado extends javax.swing.JFrame {
         jLabel1.setText("_ _ _ _ _ ");
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 11, 354, 64));
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 250, Short.MAX_VALUE)
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 250, Short.MAX_VALUE)
-        );
-
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(58, 93, -1, -1));
+        jLabel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 90, 270, 260));
 
         botonA.setText("A");
         botonA.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -586,6 +574,6 @@ public class VentanaAhorcado extends javax.swing.JFrame {
     private javax.swing.JButton botonZ;
     private javax.swing.JButton botonÑ;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel jLabel2;
     // End of variables declaration//GEN-END:variables
 }
