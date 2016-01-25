@@ -1,6 +1,10 @@
 
 import java.awt.Graphics;
 import java.awt.Image;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.Random;
 import java.util.logging.Level;
@@ -47,21 +51,58 @@ public class VentanaAhorcado extends javax.swing.JFrame {
 
     
     private void eligePalabraOculta() {
-        String [] listaDePalabras = new String[10];
-        Random r = new Random();
         
-        listaDePalabras[0] = "WILLY";
-        listaDePalabras[1] = "MITOLOGIA";
-        listaDePalabras[2] = "SOWFTWARE";
-        listaDePalabras[3] = "PROGRAMACION";
-        listaDePalabras[4] = "ESTERNON";
-        listaDePalabras[5] = "DESAFIANTE";
-        listaDePalabras[6] = "HIPOPOTOMONSTROSISQUIPEDALIOFOBIA";
-        listaDePalabras[7] = "CONSECOTALEFOBIA";
-        listaDePalabras[8] = "ANATIDAEFOBIA";
-        listaDePalabras[9] = "ELECTROENCEFALOGRAFISTA";
-        palabraOculta = listaDePalabras[r.nextInt(9)];
-        System.out.println(palabraOculta);
+        //Método básico de lectura de ficheros en Java
+        File fichero = null;
+        FileReader fr = null;
+        BufferedReader br = null;
+        Random r = new Random();
+        fichero = new File("src/lemario-20101017.txt");
+        String linea = "";
+        try {
+            fr = new FileReader(fichero);
+            br = new BufferedReader(fr);
+            int numeroLineasFichero = 0;
+            while ((linea = br.readLine()) != null) {
+                   numeroLineasFichero++;
+            }
+            System.out.println(numeroLineasFichero);
+            int lineaSeleccionada = r.nextInt(numeroLineasFichero);
+            System.out.println(lineaSeleccionada);
+            
+            fr.close();
+            fr = new FileReader(fichero);
+            br = new BufferedReader(fr);
+            for (int i=0; i<lineaSeleccionada; i++) {
+                linea = br.readLine();
+            }
+            System.out.println(linea);
+            
+        } catch (FileNotFoundException ex) { 
+        }
+          catch (IOException ex) {  
+        }
+        palabraOculta = linea;
+        
+        //falta revisar las palabras con tilde o con guion
+        //falta revisar palabras con espacios en blanco
+        //falta escribir la palabra que has pedido
+       
+//        String [] listaDePalabras = new String[10];
+//        
+//        
+//        listaDePalabras[0] = "WILLY";
+//        listaDePalabras[1] = "MITOLOGIA";
+//        listaDePalabras[2] = "SOWFTWARE";
+//        listaDePalabras[3] = "PROGRAMACION";
+//        listaDePalabras[4] = "ESTERNON";
+//        listaDePalabras[5] = "DESAFIANTE";
+//        listaDePalabras[6] = "HIPOPOTOMONSTROSISQUIPEDALIOFOBIA";
+//        listaDePalabras[7] = "CONSECOTALEFOBIA";
+//        listaDePalabras[8] = "ANATIDAEFOBIA";
+//        listaDePalabras[9] = "ELECTROENCEFALOGRAFISTA";
+//        palabraOculta = listaDePalabras[r.nextInt(9)];
+//        System.out.println(palabraOculta);
     }
      
     private void pintaGuionesEnLabel() {
@@ -164,6 +205,8 @@ public class VentanaAhorcado extends javax.swing.JFrame {
         botonX = new javax.swing.JButton();
         botonY = new javax.swing.JButton();
         botonZ = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTextArea1 = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -412,6 +455,12 @@ public class VentanaAhorcado extends javax.swing.JFrame {
         });
         getContentPane().add(botonZ, new org.netbeans.lib.awtextra.AbsoluteConstraints(322, 516, 42, 42));
 
+        jTextArea1.setColumns(20);
+        jTextArea1.setRows(5);
+        jScrollPane1.setViewportView(jTextArea1);
+
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 580, 360, 100));
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -604,5 +653,7 @@ public class VentanaAhorcado extends javax.swing.JFrame {
     private javax.swing.JButton botonÑ;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextArea jTextArea1;
     // End of variables declaration//GEN-END:variables
 }
