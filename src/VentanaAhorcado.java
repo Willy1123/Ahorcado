@@ -139,7 +139,7 @@ public class VentanaAhorcado extends javax.swing.JFrame {
 
     private void chequeaLetra (JButton boton) {
         if (boton.isEnabled()) {
-        String letra = boton.getText();
+        String letra = boton.getText().toLowerCase();
         boton.setEnabled(false);
         String palabraConGuiones = jLabel1.getText();
         
